@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frage</title>
+    <style>
+        /* Allgemeine Body-Styles */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('panther.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .gratulation {
+            text-align: center;
+            color: #c3419a;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            text-shadow: 2px 2px 5px black, 0 0 15px #ff00ff, 0 0 20px #ff80ff;
+            margin-bottom: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 15px;
+            animation: glow 3s infinite alternate;
+        }
+
+        /* Animierter Text-Effekt */
+        @keyframes glow {
+            from {
+                text-shadow: 2px 2px 5px rgb(189, 48, 137), 0 0 10px #cb4bad, 0 0 20px #ff5ec9;
+            }
+            to {
+                text-shadow: 2px 2px 5px black, 0 0 15px #070507, 0 0 30px #dac9da;
+            }
+        }
+
+        .gratulation-gif {
+            margin-top: 10px;
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .content {
+            text-align: center;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        button {
+            font-size: 1.5rem;
+            box-shadow: 0px 0px 12px rgb(177, 82, 152);
+            border-radius: 10px;
+            background-color: #1b1518;
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        button:active {
+            background-color: rgb(24, 40, 58);
+            transform: translateY(2px);
+        }
+
+        .ausgabe {
+            text-align: center;
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        .input-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <!-- Gratulation mit GIF -->
+    <div class="gratulation">
+        🎉 HAPPY BIRTHDAYYY!! 🎉
+        <br>
+        <img src="happy-birthday-henry-cavill.gif" alt="GIF" class="gratulation-gif">
+    </div>
+
+    <!-- Fragebereich -->
+    <div class="content">
+        <h1>Willst du mit mir raus?</h1>
+        <button onclick="antwort('Ja')">Ja</button>
+        <button onclick="antwort('Nein')">Nein</button>
+        <div id="ausgabe" class="ausgabe"></div>
+    </div>
+
+    <!-- Eingabeformular -->
+    <div class="input-container">
+        <form action="https://formspree.io/f/xblljvjn" method="POST">
+            <input type="text" name="message" placeholder="Wann hast du Zeit?" required>
+            <button type="submit">Senden</button>
+        </form>
+        <p id="response" style="margin-top: 30px; color: #dd26ac; font-size: 1.2rem;"></p>
+    </div>
+
+    <script>
+        // Funktion, um Konfetti langsam von oben nach unten fallen zu lassen
+        function starteKonfetti() {
+            const duration = 5 * 1000;
+            const end = Date.now() + duration;
+
+            const frame = () => {
+                confetti({
+                    particleCount: 2,
+                    startVelocity: 0,
+                    angle: 90,
+                    spread: 55,
+                    origin: { x: Math.random(), y: 0 },
+                    colors: ['#ff0', '#ff1493', '#00f', '#0f0', '#ffa500'],
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            };
+
+            frame();
+        }
+
+        // Konfetti starten, wenn die Seite geladen wird
+        window.onload = starteKonfetti;
+
+        // Antwort auf Button-Klick anzeigen
+        function antwort(antwort) {
+            if (antwort === 'Ja') {
+                document.getElementById('ausgabe').innerHTML = 'Yippie!!!';
+            } else if (antwort === 'Nein') {
+                document.getElementById('ausgabe').innerHTML = 'Bitte erneut versuchen!';
+            }
+        }
+    </script>
+</body>
+</html>
